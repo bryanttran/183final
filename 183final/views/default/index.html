@@ -1,0 +1,190 @@
+{{extend 'layout.html'}}
+
+<div id="target"></div>
+
+<script id="template" type="text/ractive">
+<div id="boards_page">
+    <h1 style="color:blue" align="left">Bulletin Board</h1>
+    <div>
+        {{if auth.is_logged_in():}}
+            <button class="btn btn-primary" on-click="new-board">Create Board</button>
+        {{pass}}
+        <div>
+            {{if not auth.is_logged_in():}}
+                {{=A('Log In', _class='btn btn-success', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+                {{=A('Sign Up', _class='btn btn-warning', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+            {{pass}}
+        </div>
+    </div>
+
+    <div id="boards_list">
+        {% #boards_list %}
+        <div >
+            <div class="board">
+                <h2><a href="{% "index/" + board_id %}">{% board_name %}</a></h2>
+                {% #if is_draft === false %}
+                <span>Board Description: {% board_description %}</span>
+                {% /if %}
+                {% #if is_draft === true %}
+                    {% #if board_id === latest_board_id %}
+                    <input type="text" class="boardname" id="focus_input" name="new_board_name" value="{% active_draft_name %}"
+                     placeholder="Name" data-boardid="{% board_id %}"/>
+                    {% /if %}
+                    {% #if board_id !== latest_board_id %}
+                    <input type="text" class="boardname" name="new_board_name" value="{% active_draft_name %}"
+                    placeholder="Name" data-boardid="{% board_id %}" />
+                    {% /if %}
+                <textarea name="board_description" value="{% active_draft_description %}"
+                cols="20" rows="2" class="board_description" placeholder="Description"></textarea>
+                {% /if %}
+            </div>
+            <div>
+                {% #if is_draft === true %}
+                <div>
+                    <button class="btn btn-success" on-click="save-board" align="center" data-boardid="{% board_id %}">Save</button>
+                </div>
+                {% /if %}
+            </div>
+        </div>
+        {% /boards_list %}
+    </div>
+</div>
+</script>
+
+<script>
+$(function() {
+  // Ractive object
+  var MAIN = new Ractive({
+    el: '#target',
+    template: '#template',
+    delimiters: ['{%', '%}'],
+    tripleDelimiters: ['{%%', '%%}'],
+    data: {
+      boards_list: [],
+      latest_board_id: "",
+    }
+  });
+
+
+  //Reset the MAIN boards list.
+  function set_MAIN_list(list) {
+    MAIN.set('boards_list', list);
+  }
+
+  function new_board() {
+    return {
+        active_draft_description: "",
+        active_draft_name: "",
+        board_author: "{{=auth.user_id}}",
+        board_description: "",
+        board_name: "",
+        board_id: generateUUID(),
+        is_draft: true,
+    };
+  }
+
+  //Updates the time and draft status before becoming a real board and being sent to the server.
+  function board_draft_data(board) {
+    board['is_draft'] = false;
+    board['active_draft_name'] = "";
+    board['active_draft_description'] = "";
+    return board;
+  }
+
+
+  function findWithAttr(array, attr, value) { //finding index of array
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+  }
+
+  //Save the active draft to the real name and description.
+  function rename_board(board) {
+    board['board_name'] = board['active_draft_name'];
+    board['board_description'] = board['active_draft_description'];
+    return board;
+  }
+
+  function sorts(data) {
+    data.sort(function(a, b) {});
+  }
+
+  MAIN.on("new-board", function(e) { //creates a new board
+    var boards_list = MAIN.get('boards_list');
+    var draft_board = new_board();
+    boards_list.unshift(draft_board);
+    sorts(boards_list);
+  });
+
+  MAIN.on("save-board", function(e) { //saves board
+    var boards_list = MAIN.get('boards_list');
+    var save_button = $(e.original.target);
+    var clicked_id = save_button.data('boardid');
+    var board_list_index = findWithAttr(boards_list, 'board_id', clicked_id);
+    var board = boards_list[board_list_index];
+    board = rename_board(board);
+    if ($.trim(board['board_name']).length > 0) {
+        var save_board = board_draft_data(board);
+        boards_list[board_list_index] = save_board;
+        sorts(boards_list);
+        record_board(save_board);
+    }
+  });
+
+  function periodic_send() {
+    var boards_list = MAIN.get('boards_list');
+    for (var i = 0; i < boards_list.length; i += 1) {
+        if(boards_list[i]['is_draft'] === true) {
+            var board = boards_list[i];
+            if (board['board_name'] !== board['active_draft_name'] || board['board_description'] !== board['active_draft_description']) {
+                if (($.trim(board['board_name']).length > 0 && $.trim(board['active_draft_name']).length === 0)
+                        && ($.trim(board['active_draft_description']).length === 0)) {
+                    board = rename_board(board);
+                    sorts(boards_list);
+                } else {
+                    board = rename_board(board);
+                    sorts(boards_list);
+                    record_board(board);
+                }
+            }
+        }
+    }
+  }
+
+  function record_board(board) {
+    $.ajax("{{=URL('default', 'add_board', user_signature=True)}}",
+            {
+              data: {
+                board_name: board['board_name'],
+                board_description: board['board_description'],
+                is_draft: board['is_draft'],
+                board_id: board['board_id'],
+                active_draft_description: board['active_draft_description'],
+                active_draft_name: board['active_draft_name'],
+              },
+              method: 'POST',
+              success: function() {}
+            }
+    );
+  }
+
+
+
+  function generateUUID(){
+    var d = new Date().getTime();
+    if(window.performance && typeof window.performance.now === "function"){
+        d += performance.now(); //use high-precision timer if available
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+  }
+
+  setInterval(periodic_send, 5000);
+
+});
+</script>

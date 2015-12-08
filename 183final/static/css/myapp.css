@@ -1,0 +1,112 @@
+/* line 1, ../sass/_main.scss */
+.colorful {
+  color: #bb8833;
+}
+
+.rect {
+  width:250px;
+  height:250px;
+  background-color: #d4d4d4;
+  vertical-align: top;
+  display: inline-block;
+  text-wrap: normal;
+  margin: 10px;
+  border-top: medium double #333;
+  border-radius: 10px;
+  border: 1px solid #000;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 2px 2px;
+  text-align: center;
+}
+
+.hr {
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+}
+
+.title {
+    font-size: xx-large;
+    color: brown;
+}
+
+.new {
+  font-size: xx-large;
+  text-align: center;
+}
+
+.date {
+  margin-top: 40px;
+  color: purple;
+}
+
+.pencil {
+  font-size: x-large;
+  margin-left: 180px;
+  color: blue;
+
+}
+ .trash {
+  font-size: x-large;
+  color: blue;
+}
+
+#boards_list {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: auto;
+}
+
+.board {
+ width:250px;
+  height:250px;
+  background-color: #d4d4d4;
+  vertical-align: top;
+  display: inline-block;
+  text-wrap: normal;
+  margin: 10px;
+  border-top: medium double #333;
+  border-radius: 10px;
+  border: 1px solid #000;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 2px 2px;
+  text-align: center;
+}
+
+.boardname {
+  width:250px;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 10px;
+  background-color: grey;
+  text-align: center;
+  font-size: 30pt;
+  color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+}
+
+.board_description {
+  font-size: 12pt;
+  border-radius: 10px;
+  width: 250px;
+  color: white;
+  border: none;
+  text-align: center;
+  background-color: green;
+  margin: 0px;
+  padding-top: 14px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  border-top: none;
+}
+
