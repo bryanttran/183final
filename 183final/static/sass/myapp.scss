@@ -10,3 +10,305 @@
 
 @import "constants";
 @import "main";
+
+#item_creation {
+  float: left;
+  margin-right: 50px;
+}
+
+#main_login {
+  float: right;
+  margin-right: 5px;
+}
+
+.lfloat{float:left}
+.rfloat{float:right}
+
+.content_header {
+  height: 50px;
+}
+
+$body-color: #222;
+$light-font-color: #777;
+$hover-background-color: #5f5f5f;
+$hover-font-color: #fff;
+
+body {
+  background-color: $body-color;
+  color: $light-font-color;
+}
+
+h2 {
+  margin-top: 10px;
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 57px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  text-align: center;
+}
+
+.page-info {
+  font-size: 10pt;
+  margin-bottom: 5px;
+}
+
+.row-board {
+  padding: 5px 5px 5px 25px;
+  margin-bottom: 10px;
+  background-color: $body-color;
+  border: 1pt solid black;
+  @include box-shadow(black 2px 2px 10px);
+  @include border-right-radius(25px);
+  display: table;
+  width: 100%;
+}
+
+.row-board:hover {
+  @include box-shadow(white 2px 2px 10px);
+}
+
+.row-board:hover .board-editors i {
+  color: $light-font-color;
+}
+
+.row-board:hover .board-editors .fa.fa-times.selected {
+  color: red;
+}
+
+.message-box:hover .message-editors.rfloat a {
+  color: $light-font-color;
+}
+
+#board-delete {
+  color: $body-color;
+  text-align: right;
+  font-size: 20px;
+}
+
+#board-edit {
+  color: $body-color;
+  text-align: right;
+  font-size: 20px;
+}
+
+.message-editors a {
+  color: $body-color;
+}
+
+.message-editors .fa.fa-times.selected {
+  color: red;
+}
+
+.row-board:hover .board-editors:hover .fa.fa-pencil:hover {
+  color: $hover-font-color;
+  cursor: pointer;
+}
+
+.message-editors:hover .fa.fa-pencil:hover {
+  color: $hover-font-color;
+  cursor: pointer;
+}
+
+.fa.fa-times.selected {
+  color: red;
+  cursor: pointer;
+}
+
+.row-board:hover .board-editors:hover .fa.fa-times:hover {
+  color: $hover-font-color;
+  cursor: pointer;
+}
+
+.row-board:hover .board-editors:hover .fa.fa-times.selected {
+  color: red;
+  cursor: pointer;
+}
+
+.message-editors:hover .fa.fa-times:hover {
+  color: $hover-font-color;
+  cursor: pointer;
+}
+
+.message-editors:hover .fa.fa-times.selected {
+  color: red;
+  cursor: pointer;
+}
+
+.board-header {
+  display: table-row;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.board-name {
+  font-size: 18pt;
+  font-weight: bold;
+  display: table-row;
+  color: $light-font-color;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.board-name:hover {
+  color: $hover-font-color;
+}
+
+.board-desc {
+  height: 35px;
+  display: table-cell;
+  line-height: 35px;
+  //width: 75px;
+  max-width: 75px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.board-count {
+  margin-right: 25px;
+  padding-right: 25px;
+  font-size: 12pt;
+  font-weight: bold;
+  display: table-cell;
+  text-align: right;
+}
+
+.board-editors {
+  max-width: 25px;
+  padding-right: 25px;
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+  display: table-cell;
+  color: $light-font-color;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+div[id*='edit_message'] {
+  padding-right: 20%;
+  display: none;
+}
+
+.box-line {
+  height: 25pt;
+}
+
+.message-date {
+  font-style: italic;
+}
+
+.message-creator {
+  text-align: right;
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+  font-style: italic;
+}
+
+.message-editors {
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.message-wrapper {
+  display: table;
+  min-height: 500pt; //Done because CSS was made by idiots
+  width: 100%;
+  height: 100%;
+}
+
+.message-box {
+  display: table-cell;
+  height: 48%;
+  max-height: 48%;
+  min-height: 48%;
+  width: 48%;
+  max-width: 50%;
+  @include box-shadow(black 2px 2px 10px);
+  @include border-radius(25px);
+  background-color: $body-color;
+  border: 1pt solid black;
+  padding: 10px;
+  margin: 1%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+
+.message-box:hover {
+  @include box-shadow(white 2px 2px 10px);
+}
+
+.message-header {
+  padding-top: 25pt;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18pt;
+  width: 100%;
+}
+
+.message-contents {
+  text-align: left;
+  margin: 10pt;
+  width: 90%;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button {
+  color: black;
+  padding: 4px;
+  display: inline-block;
+  @include border-radius(4px, 4px);
+  box-sizing: border-box;
+  @include background-image(radial-gradient(95% 95%, grey 5%, $body-color 85%));
+  @include box-shadow(black 1px 1px 10px);
+}
+
+.button.delete {
+  color: black;
+  padding: 4px;
+  display: inline-block;
+  @include border-radius(4px, 4px);
+  box-sizing: border-box;
+  @include background-image(radial-gradient(95% 95%, red 5%, $body-color 85%));
+  @include box-shadow(black 1px 1px 10px);
+}
+
+.button:hover {
+  @include background-image(radial-gradient(95% 95%, $body-color 5%, grey 85%));
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button.delete:hover {
+  @include background-image(radial-gradient(95% 95%, $body-color 5%, red 85%));
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#button_back {
+  padding: 4px;
+  display: inline-block;
+  @include border-radius(4px, 4px);
+  border: 1px solid $body-color;
+  box-sizing: border-box;
+}
+
+#button_back:hover {
+  background-color: $hover-background-color;
+  color: black;
+  cursor: pointer;
+  border: 1px solid #111;
+}

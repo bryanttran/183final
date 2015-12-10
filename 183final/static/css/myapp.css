@@ -3,110 +3,445 @@
   color: #bb8833;
 }
 
-.rect {
-  width:250px;
-  height:250px;
-  background-color: #d4d4d4;
-  vertical-align: top;
-  display: inline-block;
-  text-wrap: normal;
-  margin: 10px;
-  border-top: medium double #333;
-  border-radius: 10px;
-  border: 1px solid #000;
-  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 2px 2px;
+/* line 6, ../sass/_main.scss */
+.btn .fa {
+  padding-right: 0.5em;
+}
+
+/* line 11, ../sass/_main.scss */
+.msg_content {
+  white-space: pre-wrap;
+}
+
+/* line 14, ../sass/myapp.scss */
+#item_creation {
+  float: left;
+  margin-right: 50px;
+}
+
+/* line 19, ../sass/myapp.scss */
+#main_login {
+  float: right;
+  margin-right: 5px;
+}
+
+/* line 24, ../sass/myapp.scss */
+.lfloat {
+  float: left;
+}
+
+/* line 25, ../sass/myapp.scss */
+.rfloat {
+  float: right;
+}
+
+/* line 27, ../sass/myapp.scss */
+.content_header {
+  height: 50px;
+}
+
+/* line 36, ../sass/myapp.scss */
+body {
+  background-color: #222;
+  color: #777;
+}
+
+/* line 41, ../sass/myapp.scss */
+h2 {
+  margin-top: 10px;
+}
+
+/* line 45, ../sass/myapp.scss */
+.page-footer {
+  position: fixed;
+  bottom: 57px;
+  left: 0;
+  width: 100%;
+  height: 60px;
   text-align: center;
 }
 
-.hr {
-    padding: 0;
-    border: none;
-    border-top: medium double #333;
-    color: #333;
-    text-align: center;
+/* line 54, ../sass/myapp.scss */
+.page-info {
+  font-size: 10pt;
+  margin-bottom: 5px;
+}
+
+/* line 59, ../sass/myapp.scss */
+.row-board {
+  padding: 5px 5px 5px 25px;
+  background-color: black;
+  border: 1pt solid gold;
+  margin-bottom: 15px;
+  display: table;
+  width: 100%;
+}
+
+#row-board {
+  padding: 5px 5px 5px 25px;
+  background-color: black;
+  border: 1pt solid gold;
+  margin-bottom: 15px;
+  display: table;
+  width: 100%;
+}
+
+/* line 70, ../sass/myapp.scss */
+.row-board:hover {
+  -moz-box-shadow: gold 3px 3px 10px;
+  -webkit-box-shadow: gold 3px 3px 10px;
+  box-shadow: gold 3px 3px 10px;
+}
+
+/* line 74, ../sass/myapp.scss */
+.row-board:hover .board-editors i {
+  color: #777;
+}
+
+/* line 78, ../sass/myapp.scss */
+.row-board:hover .board-editors .fa.fa-times.selected {
+  color: red;
+}
+
+/* line 59, ../sass/myapp.scss */
+.row-grid {
+  padding: 5px 5px 5px 25px;
+  background-color: black;
+  border: 1pt solid gold;
+  display: inline-block;
+  margin: 15px;
+  width: 300px;
+  height: 200px;
+}
+
+#row-grid {
+  padding: 5px 5px 5px 25px;
+  background-color: black;
+  border: 1pt solid gold;
+  display: inline-block;
+  margin: 15px;
+  width: 300px;
+  height: 200px;
+}
+
+/* line 70, ../sass/myapp.scss */
+.row-grid:hover {
+  -moz-box-shadow: gold 3px 3px 10px;
+  -webkit-box-shadow: gold 3px 3px 10px;
+  box-shadow: gold 3px 3px 10px;
+}
+
+/* line 74, ../sass/myapp.scss */
+.row-grid:hover .board-editors i {
+  color: #777;
+}
+
+/* line 78, ../sass/myapp.scss */
+.row-grid:hover .board-editors .fa.fa-times.selected {
+  color: red;
+}
+
+
+
+/* line 82, ../sass/myapp.scss */
+.message-box:hover .message-editors.rfloat a {
+  color: #777;
+}
+
+/* line 86, ../sass/myapp.scss */
+#board-delete {
+  color: #222;
+  text-align: right;
+  font-size: 20px;
+}
+
+/* line 92, ../sass/myapp.scss */
+#board-edit {
+  color: #222;
+  text-align: right;
+  font-size: 20px;
+}
+
+/* line 98, ../sass/myapp.scss */
+.message-editors a {
+  color: #222;
+}
+
+/* line 102, ../sass/myapp.scss */
+.message-editors .fa.fa-times.selected {
+  color: red;
+}
+
+/* line 106, ../sass/myapp.scss */
+.row-board:hover .board-editors:hover .fa.fa-pencil:hover {
+  color: white;
+  cursor: pointer;
+}
+
+/* line 111, ../sass/myapp.scss */
+.message-editors:hover .fa.fa-pencil:hover {
+  color: white;
+  cursor: pointer;
+}
+
+/* line 116, ../sass/myapp.scss */
+.fa.fa-times.selected {
+  color: red;
+  cursor: pointer;
+}
+
+/* line 121, ../sass/myapp.scss */
+.row-board:hover .board-editors:hover .fa.fa-times:hover {
+  color: white;
+  cursor: pointer;
+}
+
+/* line 126, ../sass/myapp.scss */
+.row-board:hover .board-editors:hover .fa.fa-times.selected {
+  color: red;
+  cursor: pointer;
+}
+
+/* line 131, ../sass/myapp.scss */
+.message-editors:hover .fa.fa-times:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+/* line 136, ../sass/myapp.scss */
+.message-editors:hover .fa.fa-times.selected {
+  color: red;
+  cursor: pointer;
+}
+
+/* line 141, ../sass/myapp.scss */
+.board-header {
+  display: table-row;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* line 148, ../sass/myapp.scss */
+.board-name {
+  font-size: 18pt;
+  font-weight: bold;
+  display: table-row;
+  color: #777;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* line 158, ../sass/myapp.scss */
+.board-name:hover {
+  color: #fff;
+}
+
+/* line 162, ../sass/myapp.scss */
+.board-desc {
+  height: 35px;
+  display: table-cell;
+  line-height: 35px;
+  max-width: 75px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* line 173, ../sass/myapp.scss */
+.board-count {
+  margin-right: 25px;
+  padding-right: 25px;
+  font-size: 12pt;
+  font-weight: bold;
+  display: table-cell;
+  text-align: right;
+}
+
+/* line 182, ../sass/myapp.scss */
+.board-editors {
+  max-width: 25px;
+  padding-right: 25px;
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+  display: table-cell;
+  color: #777;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* line 195, ../sass/myapp.scss */
+div[id*='edit_message'] {
+  padding-right: 20%;
+  display: none;
+}
+
+/* line 200, ../sass/myapp.scss */
+.box-line {
+  height: 25pt;
+}
+
+/* line 204, ../sass/myapp.scss */
+.message-date {
+  font-style: italic;
+}
+
+/* line 208, ../sass/myapp.scss */
+.message-creator {
+  text-align: right;
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+  font-style: italic;
+}
+
+/* line 216, ../sass/myapp.scss */
+.message-editors {
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+/* line 221, ../sass/myapp.scss */
+.message-wrapper {
+  display: table;
+  min-height: 500pt;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 228, ../sass/myapp.scss */
+.message-box {
+  display: table-cell;
+  height: 48%;
+  max-height: 48%;
+  min-height: 48%;
+  width: 48%;
+  max-width: 50%;
+  -moz-box-shadow: black 2px 2px 10px;
+  -webkit-box-shadow: black 2px 2px 10px;
+  box-shadow: white 2px 2px 10px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+  background-color: #222;
+  border: 1pt solid gold;
+  padding: 10px;
+  margin: 1%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+
+/* line 246, ../sass/myapp.scss */
+.message-box:hover {
+  -moz-box-shadow: white 2px 2px 10px;
+  -webkit-box-shadow: white 2px 2px 10px;
+  box-shadow: white 2px 2px 10px;
+}
+
+/* line 250, ../sass/myapp.scss */
+.message-header {
+  padding-top: 25pt;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18pt;
+  width: 100%;
+}
+
+/* line 258, ../sass/myapp.scss */
+.message-contents {
+  text-align: left;
+  margin: 10pt;
+  width: 90%;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 267, ../sass/myapp.scss */
+.button {
+  color: black;
+  padding: 4px;
+  display: inline-block;
+  -moz-border-radius: 4px / 4px;
+  -webkit-border-radius: 4px 4px;
+  border-radius: 4px / 4px;
+  box-sizing: border-box;
+  background-size: 100%;
+  background-image: -moz-radial-gradient(95% 95%, #808080 5%, #222222 85%);
+  background-image: -webkit-radial-gradient(95% 95%, #808080 5%, #222222 85%);
+  background-image: radial-gradient(95% 95%, #808080 5%, #222222 85%);
+  -moz-box-shadow: black 1px 1px 10px;
+  -webkit-box-shadow: black 1px 1px 10px;
+  box-shadow: black 1px 1px 10px;
+}
+
+/* line 277, ../sass/myapp.scss */
+.button.delete {
+  color: black;
+  padding: 4px;
+  display: inline-block;
+  -moz-border-radius: 4px / 4px;
+  -webkit-border-radius: 4px 4px;
+  border-radius: 4px / 4px;
+  box-sizing: border-box;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9Ijk1JSIgY3k9Ijk1JSIgcj0iODUlIj48c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjZmYwMDAwIi8+PHN0b3Agb2Zmc2V0PSI4NSUiIHN0b3AtY29sb3I9IiMyMjIyMjIiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-radial-gradient(95% 95%, #ff0000 5%, #222222 85%);
+  background-image: -webkit-radial-gradient(95% 95%, #ff0000 5%, #222222 85%);
+  background-image: radial-gradient(95% 95%, #ff0000 5%, #222222 85%);
+  -moz-box-shadow: black 1px 1px 10px;
+  -webkit-box-shadow: black 1px 1px 10px;
+  box-shadow: black 1px 1px 10px;
+}
+
+/* line 287, ../sass/myapp.scss */
+.button:hover {
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9Ijk1JSIgY3k9Ijk1JSIgcj0iODUlIj48c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMjIyMjIyIi8+PHN0b3Agb2Zmc2V0PSI4NSUiIHN0b3AtY29sb3I9IiM4MDgwODAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-radial-gradient(95% 95%, #222222 5%, #808080 85%);
+  background-image: -webkit-radial-gradient(95% 95%, #222222 5%, #808080 85%);
+  background-image: radial-gradient(95% 95%, #222222 5%, #808080 85%);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* line 294, ../sass/myapp.scss */
+.button.delete:hover {
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9Ijk1JSIgY3k9Ijk1JSIgcj0iODUlIj48c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMjIyMjIyIi8+PHN0b3Agb2Zmc2V0PSI4NSUiIHN0b3AtY29sb3I9IiNmZjAwMDAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -moz-radial-gradient(95% 95%, #222222 5%, #ff0000 85%);
+  background-image: -webkit-radial-gradient(95% 95%, #222222 5%, #ff0000 85%);
+  background-image: radial-gradient(95% 95%, #222222 5%, #ff0000 85%);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* line 301, ../sass/myapp.scss */
+#button_back {
+  padding: 4px;
+  display: inline-block;
+  -moz-border-radius: 4px / 4px;
+  -webkit-border-radius: 4px 4px;
+  border-radius: 4px / 4px;
+  border: 1px solid #222;
+  box-sizing: border-box;
+}
+
+/* line 309, ../sass/myapp.scss */
+#button_back:hover {
+  background-color: #5f5f5f;
+  color: black;
+  cursor: pointer;
+  border: 1px solid #111;
 }
 
 .title {
-    font-size: xx-large;
-    color: brown;
-}
-
-.new {
-  font-size: xx-large;
   text-align: center;
-}
-
-.date {
-  margin-top: 40px;
-  color: purple;
-}
-
-.pencil {
-  font-size: x-large;
-  margin-left: 180px;
-  color: blue;
-
-}
- .trash {
-  font-size: x-large;
   color: blue;
 }
-
-#boards_list {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 90%;
-  margin: auto;
-}
-
-.board {
- width:250px;
-  height:250px;
-  background-color: #d4d4d4;
-  vertical-align: top;
-  display: inline-block;
-  text-wrap: normal;
-  margin: 10px;
-  border-top: medium double #333;
-  border-radius: 10px;
-  border: 1px solid #000;
-  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 2px 2px;
-  text-align: center;
-}
-
-.boardname {
-  width:250px;
-  margin: 0px;
-  padding: 0px;
-  border-radius: 10px;
-  background-color: grey;
-  text-align: center;
-  font-size: 30pt;
-  color: white;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-}
-
-.board_description {
-  font-size: 12pt;
-  border-radius: 10px;
-  width: 250px;
-  color: white;
-  border: none;
-  text-align: center;
-  background-color: green;
-  margin: 0px;
-  padding-top: 14px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-  border-top: none;
-}
-

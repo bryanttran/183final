@@ -1,56 +1,115 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
+
+    <header class="container-fluid background">
+      <div>
+        <h1 class="title" style="font-family:fantasy;">UCSC Slugbook Exchange</h1>
+      </div>
+    </header>
+
 
 <div id="target"></div>
 
 <script id="template" type="text/ractive">
-<div id="boards_page">
-    <h1 style="color:blue" align="left">Bulletin Board</h1>
-    <div>
-        {{if auth.is_logged_in():}}
-            <button class="btn btn-primary" on-click="new-board">Create Board</button>
-        {{pass}}
-        <div>
-            {{if not auth.is_logged_in():}}
-                {{=A('Log In', _class='btn btn-success', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
-                {{=A('Sign Up', _class='btn btn-warning', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
-            {{pass}}
-        </div>
-    </div>
 
-    <div id="boards_list">
-        {% #boards_list %}
-        <div >
-            <div class="board">
-                <h2><a href="{% "index/" + board_id %}">{% board_name %}</a></h2>
-                {% #if is_draft === false %}
-                <span>Board Description: {% board_description %}</span>
-                {% /if %}
-                {% #if is_draft === true %}
-                    {% #if board_id === latest_board_id %}
-                    <input type="text" class="boardname" id="focus_input" name="new_board_name" value="{% active_draft_name %}"
-                     placeholder="Name" data-boardid="{% board_id %}"/>
-                    {% /if %}
-                    {% #if board_id !== latest_board_id %}
-                    <input type="text" class="boardname" name="new_board_name" value="{% active_draft_name %}"
-                    placeholder="Name" data-boardid="{% board_id %}" />
-                    {% /if %}
-                <textarea name="board_description" value="{% active_draft_description %}"
-                cols="20" rows="2" class="board_description" placeholder="Description"></textarea>
-                {% /if %}
-            </div>
-            <div>
-                {% #if is_draft === true %}
-                <div>
-                    <button class="btn btn-success" on-click="save-board" align="center" data-boardid="{% board_id %}">Save</button>
-                </div>
-                {% /if %}
-            </div>
-        </div>
-        {% /boards_list %}
-    </div>
+<div class="content_header">
+  {{if auth.user_id is None:}}
+  {{else:}}
+  <div id="item_creation" class="lfloat">
+    <a class="btn button" id="button_write" on-click="create-board">{{=icon_plus + ' Create Board'}}</a>
+  </div>
+  <div id="toggle">
+    <button class="btn button" id="showlist">List</button>
+    <button class="btn button" id="showgrid">Grid</button>
+  </div>
+  {{pass}}
+  <div id="main_login" class="rfloat">
+    {% #if del_vis === true %}
+    <a class="button delete" intro='fade' outro='fade' on-click="delete-boards"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;DELETE</a>
+    {% /if %}
+    {{if auth.user_id is None:}}
+    {{=A('Sign Up', _class='button', _href=URL('default', 'user', args=['register']))}}
+    {{=A('Sign In', _class='button', _href=URL('default', 'user', args=['login']))}}
+    {{else:}}
+    {{=A('Sign Out', _class='button', _href=URL('default', 'user', args=['logout']))}}
+    {{pass}}
+  </div>
 </div>
+
+{% #if form_vis === true %}
+<div id="new_brd" intro='fade' outro='fade'>
+  <form action="#" class="form-horizontal" enctype="multipart/form-data" method="post">
+    <div class="form-group" id="no_table_message__row">
+      <label class="control-label col-sm-3" for="no_table_message" id="no_table_message__label"> Name </label>
+      <div class="col-sm-9">
+        <textarea value="{% active_draft_name %}" class="text form-control" cols="40" id="no_table_message" name="name" rows="10">
+        </textarea>
+        <span class="help-block"></span>
+      </div>
+
+      <label class="control-label col-sm-3" for="no_table_message" id="no_table_message__label"> Description </label>
+      <div class="col-sm-9">
+        <textarea value="{% active_draft_desc %}" class="text form-control" cols="40" id="no_table_message" name="description" rows="10">
+        </textarea>
+        <span class="help-block"></span>
+      </div>
+
+      <div class="form-group" id="submit_record__row">
+        <div class="col-sm-9 col-sm-offset-3">
+          <input class="btn btn-primary" type="submit" value="Submit" on-click="send-brd"/>
+          <input class="btn btn-primary" type="cancel" value="Cancel" on-click="cancel-edit"/>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% /if %}
+
+<div class="board-list">
+  {% #if brd_len < 1 %}
+    <span>No boards. Create one!</span>
+  {% /if %}
+  <button class="btn button" id="showlist">List</button>
+  <button class="btn button" id="showgrid">Grid</button>
+  {% #brd_dict:iter %}
+  <div id="row-board">
+    <div id="row-grid" id="boardchange">
+      <div class="board-header">
+        <a class="board-name" href="{{=URL('default', 'boards')}}/{% id %}">
+          {% brd_name %}
+        </a>
+        <div class="board-count">
+          posts: {% message_num %} &nbsp;
+        </div>
+      </div>
+      <div class="board-desc">
+        {% brd_desc %}
+      </div>
+      <div class="board-editors">
+      {% #if user_id === creator %}
+        {% #if (typeof marked_boards !== 'undefined') && (marked_boards.indexOf(id) >= 0)%}
+          <a id="board-edit"><i class="fa fa-pencil" data-brdid={% id %} on-click="edit-board"/></a>
+          <a id="board-delete"><i class="fa fa-times selected" data-brdid={% id %} on-click="mark-board"/></a>
+        {% else %}
+          <a id="board-edit"><i class="fa fa-pencil" data-brdid={% id %} on-click="edit-board"/></a>
+          <a id="board-delete"><i class="fa fa-times" data-brdid={% id %} on-click="mark-board"/></a>
+        {% /if %}
+      {% /if %}
+      </div>
+    </div>
+  </div>
+  {% /brd_dict %}
+</div>
+
+{% #if loading %}
+  <div id="load_spinner">
+    <i class="fa fa-spinner fa-pulse fa-4x"></i>
+  </div>
+{% /if %}
+
 </script>
 
+<!--- BEGIN ANGULAR FNS --->
 <script>
 $(function() {
   // Ractive object
@@ -60,131 +119,193 @@ $(function() {
     delimiters: ['{%', '%}'],
     tripleDelimiters: ['{%%', '%%}'],
     data: {
-      boards_list: [],
-      latest_board_id: "",
-    }
+      brd_dict: {},
+      draft_id: "",
+      active_draft_name: "",
+      active_draft_desc: "",
+      user_id: 0,
+      brd_len: {},
+      marked_boards: [],
+      del_vis: false,
+      form_vis: false,
+      loading: true
+    },
   });
 
+  load_boards();
+  setInterval(function() {load_boards()}, 10000);
 
-  //Reset the MAIN boards list.
-  function set_MAIN_list(list) {
-    MAIN.set('boards_list', list);
-  }
-
-  function new_board() {
-    return {
-        active_draft_description: "",
-        active_draft_name: "",
-        board_author: "{{=auth.user_id}}",
-        board_description: "",
-        board_name: "",
-        board_id: generateUUID(),
-        is_draft: true,
-    };
-  }
-
-  //Updates the time and draft status before becoming a real board and being sent to the server.
-  function board_draft_data(board) {
-    board['is_draft'] = false;
-    board['active_draft_name'] = "";
-    board['active_draft_description'] = "";
-    return board;
-  }
-
-
-  function findWithAttr(array, attr, value) { //finding index of array
-    for(var i = 0; i < array.length; i += 1) {
-        if(array[i][attr] === value) {
-            return i;
+  // Reloads the list of boards.
+  function load_boards() {
+    $.ajax("{{=URL('default', 'load_boards')}}",
+      {
+        method: 'POST',
+        success: function (data) {
+          MAIN.set('brd_dict', data['brd_dict']);
+          MAIN.set('loading', false);
+          MAIN.set('user_id', {{=user_id}});
+          MAIN.set('brd_len', data['brd_len']);
+        },
+        fail: function() {
+          $("#server_error").show();
         }
-    }
+      }
+    );
   }
 
-  //Save the active draft to the real name and description.
-  function rename_board(board) {
-    board['board_name'] = board['active_draft_name'];
-    board['board_description'] = board['active_draft_description'];
-    return board;
-  }
-
-  function sorts(data) {
-    data.sort(function(a, b) {});
-  }
-
-  MAIN.on("new-board", function(e) { //creates a new board
-    var boards_list = MAIN.get('boards_list');
-    var draft_board = new_board();
-    boards_list.unshift(draft_board);
-    sorts(boards_list);
+  $("#showlist").click(function(){
+     $("#row-grid").toggle();
+     $("#row-board").hide();
   });
 
-  MAIN.on("save-board", function(e) { //saves board
-    var boards_list = MAIN.get('boards_list');
-    var save_button = $(e.original.target);
-    var clicked_id = save_button.data('boardid');
-    var board_list_index = findWithAttr(boards_list, 'board_id', clicked_id);
-    var board = boards_list[board_list_index];
-    board = rename_board(board);
-    if ($.trim(board['board_name']).length > 0) {
-        var save_board = board_draft_data(board);
-        boards_list[board_list_index] = save_board;
-        sorts(boards_list);
-        record_board(save_board);
-    }
+  $("#showgrid").click(function(){
+     $("#row-board").toggle();
+     $("#row-list").hide();
   });
 
-  function periodic_send() {
-    var boards_list = MAIN.get('boards_list');
-    for (var i = 0; i < boards_list.length; i += 1) {
-        if(boards_list[i]['is_draft'] === true) {
-            var board = boards_list[i];
-            if (board['board_name'] !== board['active_draft_name'] || board['board_description'] !== board['active_draft_description']) {
-                if (($.trim(board['board_name']).length > 0 && $.trim(board['active_draft_name']).length === 0)
-                        && ($.trim(board['active_draft_description']).length === 0)) {
-                    board = rename_board(board);
-                    sorts(boards_list);
-                } else {
-                    board = rename_board(board);
-                    sorts(boards_list);
-                    record_board(board);
-                }
-            }
-        }
-    }
-  }
-
-  function record_board(board) {
-    $.ajax("{{=URL('default', 'add_board', user_signature=True)}}",
+  function send_message(msg_name, msg_desc) {
+    var call_draft_id = MAIN.get('draft_id');
+    $.ajax("{{=URL('default', 'add_board')}}",
             {
               data: {
-                board_name: board['board_name'],
-                board_description: board['board_description'],
-                is_draft: board['is_draft'],
-                board_id: board['board_id'],
-                active_draft_description: board['active_draft_description'],
-                active_draft_name: board['active_draft_name'],
+                id: call_draft_id,     // request.vars.id
+                brd_name: msg_name,    // request.vars.brd_name
+                brd_desc: msg_desc     // request.vars.brd_desc
               },
               method: 'POST',
-              success: function() {}
+              success: function() {
+                load_boards();
+              },
+              fail: function() {
+                $("#server_error").show();
+              }
             }
     );
   }
 
+  $('#toggle > button').click(function() {
+    var ix = $(this).index();
 
+    $('#left').toggle( ix === 0 );
+    $('#right').toggle( ix === 1 );
+  });
 
-  function generateUUID(){
-    var d = new Date().getTime();
-    if(window.performance && typeof window.performance.now === "function"){
-        d += performance.now(); //use high-precision timer if available
+  // Listens for a board being marked.
+  MAIN.on("mark-board", function(e) {
+    var t = $(e.original.target); // This is the button on which we clicked.
+    var clicked_id = t.data('brdid');  // To set it, you could do .data('msgid', 'my id');
+    //get list of marked boards
+    var marked_boards = MAIN.get('marked_boards');
+    // Check if board is already in list
+    var board_index = marked_boards.indexOf(clicked_id);
+    if (board_index >= 0) {
+      // If is, remove
+      marked_boards.splice(board_index, 1);
+      //Make X default colour
+//      t.removeClass('selected');
+    } else {
+      // If not, add
+      marked_boards.push(clicked_id);
+      //Make X red colour
+//      t.addClass('selected');
     }
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-    });
-  }
+    // If marked_boards size < 1, hide delete button else, show it.
+    if (marked_boards.length < 1) {
+      MAIN.set('del_vis', false);
+    } else {
+      MAIN.set('del_vis', true);
+    }
+    MAIN.set('marked_boards', marked_boards);
+  });
 
-  setInterval(periodic_send, 5000);
+  // Listens for link to edit board
+  MAIN.on("edit-board", function(e) {
+    // Make edit form visible
+    MAIN.set('form_vis', true);
+    // First, we send to the server the current draft, to avoid losing it.
+    var t = $(e.original.target); // This is the button on which we clicked.
+    var clicked_id = t.data('brdid');  // To set it, you could do .data('msgid', 'my id');
+    var msg_dict = MAIN.get('brd_dict');
+    // First, display the draft text in the editing area.
+    var msg_index = -1;
+    for (var i = 0; i < msg_dict.length; i++)
+    {
+      if (msg_dict[i]['id'] === clicked_id) {
+        msg_index = i;
+        break;
+      }
+    }
+    MAIN.set('active_draft_name', msg_dict[msg_index]['brd_name']);
+    MAIN.set('active_draft_desc', msg_dict[msg_index]['brd_desc']);
+    // Sets the id of the draft being edited.
+    MAIN.set('draft_id', msg_dict[msg_index]['id']);
+  });
+
+  // This code is called when the submit button is pressed.
+  MAIN.on("send-brd", function(e) {
+    var msg_name = MAIN.get('active_draft_name');
+    var msg_desc = MAIN.get('active_draft_desc');
+    if ($.trim(msg_name).length > 0) {
+      // Send content back to server.  false = message is not a draft.
+      send_message(msg_name, msg_desc);
+      MAIN.set('active_draft_name', '');
+      MAIN.set('active_draft_desc', '');
+      MAIN.set('draft_id', '');
+      // Make form invisible
+      MAIN.set('form_vis', false);
+    }
+    return false;
+  });
+
+  // This code is called when the create board button is pressed.
+  MAIN.on("create-board", function(e) {
+      MAIN.set('active_draft_name', '');
+      MAIN.set('active_draft_desc', '');
+      MAIN.set('draft_id', '');
+      // Make form invisible
+      MAIN.set('form_vis', true);
+    return false;
+  });
+
+  // This code is called when the cancel button is pressed.
+  MAIN.on("cancel-edit", function(e) {
+    MAIN.set('active_draft_name', '');
+    MAIN.set('active_draft_desc', '');
+    MAIN.set('draft_id', '');
+    // Make form invisible
+    MAIN.set('form_vis', false);
+  });
+
+  // This code is called when the delete button is pressed.
+  MAIN.on("delete-boards", function(e) {
+    // get the marked boards
+    var marked_boards = MAIN.get('marked_boards');
+    var brd_dict = MAIN.get('brd_dict');
+    var del_brds = [];
+    for (var i = 0; i < marked_boards.length; i++) {
+      del_brds.push(brd_dict[i]['id']);
+    }
+    // send ajax to delete board list.
+    $.ajax("{{=URL('default', 'delete_boards', user_signature=True)}}",
+      {
+        data: {
+          boards: marked_boards     // request.vars.boards
+        },
+        method: 'POST',
+        success: function() {
+          MAIN.set('marked_boards', []);
+          load_boards();
+        },
+        error: function() {}
+      }
+    );
+    // unselect boards
+    MAIN.set('marked_boards', []);
+    MAIN.set('del_vis', false);
+  });
 
 });
 </script>
+<!-- reference list: http://jsfiddle.net/PauWy/1/
+https://www.youtube.com/watch?v=stucKrWheVM
+-->
